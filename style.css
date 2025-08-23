@@ -1,0 +1,409 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+}
+
+a {
+    color: #c38d13;
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+/* Style the Reset Bracket button */
+.reset-button {
+    background-color: #333; /* Gold color */
+    color: #c9c9c9; /* Black text */
+    border: 1px solid #333; /* Gold border color */
+    border-radius: 4px; /* Rounded corners */
+    padding: 6px 2px; /* Padding for size */
+    font-size: 13px; /* Font size */
+    cursor: pointer; /* Pointer cursor on hover */
+    margin-top: -10px; /* Spacing from the bottom */
+}
+
+/* Add hover effect */
+.reset-button:hover { 
+    border: 1px solid #c38d13; /* Gold border color */
+}
+
+
+body {
+    padding: 20px;
+    background-color: #1a1a1a;
+    color: #e0e0e0;
+}
+
+.container {
+    display: flex;
+    gap: 20px;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.rankings {
+    width: 300px;
+    background: #2a2a2a;
+    padding: 15px;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.3);
+    border: 1px solid #333;
+}
+
+.rankings h2 {
+    margin-bottom: 15px;
+    color: #c38d13;
+    font-size: 1.5em;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    border-bottom: 2px solid #c38d13;
+    padding-bottom: 8px;
+    text-align: center;
+}
+
+.footer {
+    text-align: center;
+    margin-top: 20px;
+    color: #999;
+    font-size: 0.8em;
+
+}
+
+
+.instructions {
+    background-color: #333;
+    color: #c4c4c4;
+    font-size: 14px;
+    letter-spacing: .5px;
+    line-height: 25px;
+    text-align: center;
+    padding: 1em 0;
+    position: relative;
+    margin-top: 240px;
+    bottom: 0px;
+    
+}
+
+
+.team-card {
+    display: flex;
+    align-items: center;
+    padding: 9px;
+    margin-bottom: 8px;
+    background: #333;
+    border-radius: 4px;
+    cursor: move;
+    transition: all 0.2s ease;
+    border: 1px solid #444;
+    width: 85%;
+    margin-left: 1px;
+}
+
+.team-card:hover {
+    background: #3a3a3a;
+    transform: translateX(5px);
+    border-color: #c38d13;
+}
+
+.team-card.dragging {
+    opacity: 0.5;
+    background: #444;
+}
+
+.team-number {
+    margin-right: 5px;
+    font-weight: bold;
+    colo: #c38d13;
+    min-width: 20px;
+    position: relative;
+    top: -2px;
+}
+
+.team-card.non-playoff {
+    background: #2a2a2a;
+    color: #999;
+}
+
+.team-conference.conference-champ {
+    color: #c38d13;
+    font-weight: bold;
+    font-style: italic;
+
+}
+
+
+.team-info {
+    flex-grow: 1;
+}
+
+.team-name {
+    font-weight: bold;
+    color: #ffffff;
+}
+
+.team-conference {
+    font-size: 0.8em;
+    color: #999;
+    
+}
+
+.bracket {
+    flex-grow: 1;
+    background: #2a2a2a;
+    padding: 15.5px;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.3);
+    border: 1px solid #333;
+}
+
+.bracket h2 {
+    margin-bottom: 15px;
+    color: #c38d13;
+    font-size: 1.5em;
+    text-transform: uppercase;
+    letter-spacing: 4px;
+    border-bottom: 2px solid #c38d13;
+    padding-bottom: 8px;
+    text-align: center;
+}
+
+.bracket-container {
+    display: flex;
+    gap: 25px;
+}
+
+.round {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+    margin-top: 40px;
+}
+
+.round-title {
+    font-weight: bold;
+    margin-bottom: 10px;
+    color: #ffd700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-size: 0.9em;
+    text-align: center;
+}
+
+.matchup {
+    width: 200px;
+    background: #333;
+    border-radius: 4px;
+    padding: 6px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    border: 1px solid #444;
+    position: relative;
+    margin-bottom: 20px;
+}
+
+.matchup:hover {
+    background: #3a3a3a;
+    border-color: #c38d13;
+    transform: scale(1.02);
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.3);
+}
+
+.round:last-child .matchup::after {
+    display: none;
+}
+
+.team-slot {
+    display: flex;
+    align-items: center;
+    padding: 8px;
+    border-radius: 2px;
+    color: #e0e0e0;
+    transition: all 0.3s ease;
+}
+
+.team-slot span {
+    flex: 1;
+}
+
+.team-slot:hover {
+    background: rgba(195, 142, 19, 0.061);
+    box-shadow: 0 0 3px rgba(195, 141, 19, 0.2);
+}
+
+.team-slot:first-child {
+    border-bottom: 1px solid #444;
+}
+
+.team-slot:empty {
+    height: 36px;
+    background: transparent;
+}
+
+.winner {
+    background: rgba(175, 169, 58, 0.092);
+    font-weight: bold;
+}
+
+
+
+.quarters {
+    margin-top: -20px;
+}
+
+.round #semifinals {
+    display: flex;
+    flex-direction: column;
+    gap: 110px; /* Adds space between semifinal matchups */
+}
+
+.semis {
+    margin-top: 35px;
+}
+
+.championship {
+    margin-top: 37px;
+}
+
+.cfp-logo {
+    width: 100px; /* Adjust width as needed */
+    height: auto; /* Maintains aspect ratio */
+    margin-bottom: 5px;
+}
+
+
+.conference-info {
+    display: flex;
+    align-items: center;
+    margin-top: px;
+    gap: 5px;
+}
+
+
+.team-record {
+    font-size: 0.8em;
+    color: #999;
+    font-style: italic;
+}
+.team-logo {
+    width: 30px;
+    height: 30px;
+    margin-right: 10px;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.bowl-logo {
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    margin-top: 30px;
+    margin-bottom: 30px;
+    margin-right: -15px;
+}
+
+.trophy {
+    max-width: 13px;
+    height: 16px;
+    margin-right: 10px;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.trophy img {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+}
+
+.team-logo img {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+}
+
+.bracket-team-logo {
+    width: auto;
+    height: 20px;
+    margin-right: 8px;
+    vertical-align: middle;
+}
+
+.champion-team-logo {
+    width: 40px;
+    height: 40px;
+    vertical-align: middle;
+    margin-right: 10px;
+}
+
+.champion-display {
+    margin-top: -50px;
+    text-align: center;
+    padding: 20px;
+    background: #343434;
+    border-radius: 8px;
+    border: 1px solid #444;
+    width: 35%;
+    margin-left: 540px;
+    opacity: 0;
+    transform: translateY(20px);
+    visibility: hidden;
+    transition: all 0.6s ease-out;
+}
+
+.champion-display.show {
+    opacity: 1;
+    transform: translateY(0);
+    visibility: visible;
+}
+
+.champion-display img {
+    width: 130px;
+    height: auto;
+    margin-bottom: 20px;
+}
+
+.champion-display .champion-name {
+    font-size: 2em;
+    color: #ffd700;
+    margin-bottom: 10px;
+    margin-top: 10px;
+    font-weight: bold;
+    text-transform: uppercase;
+}
+
+.champion-display .champion-name,
+.bracket h2,
+.team-conference.conference-champ,
+.rankings h2,
+.round-title {
+    background: linear-gradient(45deg, #c38d13, #cea649, #c38d13);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-size: 200% auto;
+    animation: shine 3s linear infinite;
+}
+
+.dragging {
+    opacity: 0.8;
+    transform: scale(1.05);
+    transition: transform 0.2s;
+}
+
+
+
+
+@keyframes shine {
+    to {
+        background-position: 200% center;
+    }
+}
+

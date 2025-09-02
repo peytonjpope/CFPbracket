@@ -1,4 +1,6 @@
 # College Football Playoff Bracket Predictor 🏆
 Predict rankings and playoff results!
 
-[Visit the Website](https://cfpbracket.peytonjpope.com)
+[Live Website](https://cfpbracket.peytonjpope.com)
+[Full Documentation](https://peytonjpope.com/projects/cfpbracket)
+

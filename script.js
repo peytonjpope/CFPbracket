@@ -1,61 +1,23 @@
-const initialRankings = [
+// Replace your hardcoded initialRankings with:
+let initialRankings = [];
 
-    /*Rank	Team
-    texas
-    OSU
-    Penn State
-    Notre Dame
-    Georgia
-    Oregon
-    Clemson
-    LSU
-    BYU
-    South Carolina
-    Iowa State
-    Alabama
-    Illinois
-    Arizona State
-    SMU
-    Kansas State
-    Indiana
-    Florida
-    Tennessee
-    Louisville
-    Michigan
-    Texas A&M
-    Miami
-    Boise State
-    Ole Miss
-
-    */
-
-    { id: 1, name: 'Texas', conference: 'SEC', logo: '/team-logos/texas.png', record: '0-0', champ: true },
-    { id: 2, name: 'Ohio State', conference: 'Big Ten', logo: '/team-logos/ohio-state.png', record: '0-0', champ: true },
-    { id: 3, name: 'Penn State', conference: 'Big Ten', logo: '/team-logos/penn-state.png', record: '0-0', champ: false },
-    { id: 4, name: 'Notre Dame', conference: 'Ind', logo: '/team-logos/notre-dame.png', record: '0-0', champ: false },
-    { id: 5, name: 'Georgia', conference: 'SEC', logo: '/team-logos/georgia.png', record: '0-0', champ: false },
-    { id: 6, name: 'Oregon', conference: 'Big Ten', logo: '/team-logos/oregon.png', record: '0-0', champ: false },
-    { id: 7, name: 'Clemson', conference: 'ACC', logo: '/team-logos/clemson.png', record: '0-0', champ: true },
-    { id: 8, name: 'LSU', conference: 'SEC', logo: '/team-logos/lsu.png', record: '0-0', champ: false },
-    { id: 9, name: 'BYU', conference: 'Big 12', logo: '/team-logos/byu.png', record: '0-0', champ: true },
-    { id: 10, name: 'South Carolina', conference: 'SEC', logo: '/team-logos/south-carolina.png', record: '0-0', champ: false },
-    { id: 11, name: 'Iowa State', conference: 'Big 12', logo: '/team-logos/iowa-state.png', record: '0-0', champ: false },
-    { id: 12, name: 'Alabama', conference: 'SEC', logo: '/team-logos/alabama.png', record: '0-0', champ: false },
-    { id: 13, name: 'Illinois', conference: 'Big Ten', logo: '/team-logos/illinois.png', record: '0-0', champ: false },
-    { id: 14, name: 'Arizona State', conference: 'Big 12', logo: '/team-logos/arizona-state.png', record: '0-0', champ: false },
-    { id: 15, name: 'SMU', conference: 'ACC', logo: '/team-logos/smu.png', record: '0-0', champ: false },
-    { id: 16, name: 'Kansas State', conference: 'Big 12', logo: '/team-logos/kansas-state.png', record: '0-0', champ: false },
-    { id: 17, name: 'Indiana', conference: 'Big Ten', logo: '/team-logos/indiana.png', record: '0-0', champ: false },
-    { id: 18, name: 'Florida', conference: 'SEC', logo: '/team-logos/florida.png', record: '0-0', champ: false },
-    { id: 19, name: 'Tennessee', conference: 'SEC', logo: '/team-logos/tennessee.png', record: '0-0', champ: false },
-    { id: 20, name: 'Louisville', conference: 'ACC', logo: '/team-logos/louisville.png', record: '0-0', champ: false },
-    { id: 21, name: 'Michigan', conference: 'Big Ten', logo: '/team-logos/michigan.png', record: '0-0', champ: false },
-    { id: 22, name: 'Texas A&M', conference: 'SEC', logo: '/team-logos/texas-am.png', record: '0-0', champ: false },
-    { id: 23, name: 'Miami', conference: 'ACC', logo: '/team-logos/miami.png', record: '0-0', champ: false },
-    { id: 24, name: 'Boise State', conference: 'MWC', logo: '/team-logos/boise-state.png', record: '0-0', champ: true },
-    { id: 25, name: 'Ole Miss', conference: 'SEC', logo: '/team-logos/ole-miss.png', record: '0-0', champ: false }
-
-  ];
+// Load rankings from JSON file
+fetch('/rankings.json')
+    .then(response => response.json())
+    .then(data => {
+        initialRankings = data;
+        rankings = [...initialRankings];
+        renderRankings();
+        updateBracket();
+    })
+    .catch(error => {
+        console.error('Failed to load rankings, using fallback data');
+        // Your current hardcoded data as fallback
+        initialRankings = [/* your current data */];
+        rankings = [...initialRankings];
+        renderRankings();
+        updateBracket();
+    });
   
   let rankings = [...initialRankings];
   let bracket = {

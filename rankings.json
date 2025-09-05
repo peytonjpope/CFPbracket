@@ -3,7 +3,7 @@
         "id": 1,
         "name": "Ohio State",
         "conference": "Big Ten",
-        "logo": "https://images.collegepolltracker.com/logos/png/osu3_100_100.png",
+        "logo": "/team-logos/ohio-state.png",
         "record": "1-0",
         "champ": true
     },
@@ -11,7 +11,7 @@
         "id": 2,
         "name": "Penn State",
         "conference": "Big Ten",
-        "logo": "https://images.collegepolltracker.com/logos/png/psu_100_100.png",
+        "logo": "/team-logos/penn-state.png",
         "record": "1-0",
         "champ": false
     },
@@ -19,7 +19,7 @@
         "id": 3,
         "name": "LSU",
         "conference": "SEC",
-        "logo": "https://images.collegepolltracker.com/logos/png/lsu_100_100.png",
+        "logo": "/team-logos/lsu.png",
         "record": "1-0",
         "champ": true
     },

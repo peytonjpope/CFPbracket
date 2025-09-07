@@ -3,32 +3,32 @@
         "id": 1,
         "name": "Ohio State",
         "conference": "Big Ten",
-        "logo": "/team-logos/ohio-state.png",
-        "record": "1-0",
+        "logo": "team-logos/ohio-state.png",
+        "record": "2-0",
         "champ": true
     },
     {
         "id": 2,
         "name": "Penn State",
         "conference": "Big Ten",
-        "logo": "/team-logos/penn-state.png",
-        "record": "1-0",
+        "logo": "team-logos/penn-state.png",
+        "record": "2-0",
         "champ": false
     },
     {
         "id": 3,
         "name": "LSU",
         "conference": "SEC",
-        "logo": "/team-logos/lsu.png",
-        "record": "1-0",
+        "logo": "team-logos/lsu.png",
+        "record": "2-0",
         "champ": true
     },
     {
         "id": 4,
-        "name": "Georgia",
-        "conference": "SEC",
-        "logo": "https://images.collegepolltracker.com/logos/png/ug_100_100.png",
-        "record": "1-0",
+        "name": "Oregon",
+        "conference": "Big Ten",
+        "logo": "https://images.collegepolltracker.com/logos/png/o_100_100.png",
+        "record": "2-0",
         "champ": false
     },
     {
@@ -36,15 +36,15 @@
         "name": "Miami (FL)",
         "conference": "ACC",
         "logo": "https://images.collegepolltracker.com/logos/png/um2_100_100.png",
-        "record": "1-0",
+        "record": "2-0",
         "champ": true
     },
     {
         "id": 6,
-        "name": "Oregon",
-        "conference": "Big Ten",
-        "logo": "https://images.collegepolltracker.com/logos/png/o_100_100.png",
-        "record": "1-0",
+        "name": "Georgia",
+        "conference": "SEC",
+        "logo": "https://images.collegepolltracker.com/logos/png/ug_100_100.png",
+        "record": "2-0",
         "champ": false
     },
     {
@@ -52,19 +52,11 @@
         "name": "Texas",
         "conference": "SEC",
         "logo": "https://images.collegepolltracker.com/logos/png/ut3_100_100.png",
-        "record": "0-1",
+        "record": "1-1",
         "champ": false
     },
     {
         "id": 8,
-        "name": "Clemson",
-        "conference": "ACC",
-        "logo": "https://images.collegepolltracker.com/logos/png/cu_100_100.png",
-        "record": "0-1",
-        "champ": false
-    },
-    {
-        "id": 9,
         "name": "Notre Dame",
         "conference": "Ind",
         "logo": "https://images.collegepolltracker.com/logos/png/und2_100_100.png",
@@ -72,131 +64,139 @@
         "champ": false
     },
     {
+        "id": 9,
+        "name": "Illinois",
+        "conference": "Big Ten",
+        "logo": "https://images.collegepolltracker.com/logos/png/ui3_100_100.png",
+        "record": "2-0",
+        "champ": false
+    },
+    {
         "id": 10,
-        "name": "South Carolina",
-        "conference": "SEC",
-        "logo": "https://images.collegepolltracker.com/logos/png/usc2_100_100.png",
-        "record": "1-0",
+        "name": "Florida State",
+        "conference": "ACC",
+        "logo": "https://images.collegepolltracker.com/logos/png/fsu2_100_100.png",
+        "record": "2-0",
         "champ": false
     },
     {
         "id": 11,
-        "name": "Illinois",
-        "conference": "Big Ten",
-        "logo": "https://images.collegepolltracker.com/logos/png/ui3_100_100.png",
-        "record": "1-0",
+        "name": "South Carolina",
+        "conference": "SEC",
+        "logo": "https://images.collegepolltracker.com/logos/png/usc2_100_100.png",
+        "record": "2-0",
         "champ": false
     },
     {
         "id": 12,
-        "name": "Arizona State",
-        "conference": "Big 12",
-        "logo": "https://images.collegepolltracker.com/logos/png/asu_100_100.png",
-        "record": "1-0",
-        "champ": true
+        "name": "Clemson",
+        "conference": "ACC",
+        "logo": "https://images.collegepolltracker.com/logos/png/cu_100_100.png",
+        "record": "1-1",
+        "champ": false
     },
     {
         "id": 13,
-        "name": "Florida",
+        "name": "Oklahoma",
         "conference": "SEC",
-        "logo": "https://images.collegepolltracker.com/logos/png/uf_100_100.png",
-        "record": "1-0",
+        "logo": "https://images.collegepolltracker.com/logos/png/ou_100_100.png",
+        "record": "2-0",
         "champ": false
     },
     {
         "id": 14,
-        "name": "Florida State",
-        "conference": "ACC",
-        "logo": "https://images.collegepolltracker.com/logos/png/fsu2_100_100.png",
-        "record": "1-0",
-        "champ": false
+        "name": "Iowa State",
+        "conference": "Big 12",
+        "logo": "https://images.collegepolltracker.com/logos/png/isu3_100_100.png",
+        "record": "3-0",
+        "champ": true
     },
     {
         "id": 15,
-        "name": "Michigan",
-        "conference": "Big Ten",
-        "logo": "https://images.collegepolltracker.com/logos/png/mu4_100_100.png",
-        "record": "1-0",
+        "name": "Tennessee",
+        "conference": "SEC",
+        "logo": "https://images.collegepolltracker.com/logos/png/ut_100_100.png",
+        "record": "2-0",
         "champ": false
     },
     {
         "id": 16,
-        "name": "Iowa State",
-        "conference": "Big 12",
-        "logo": "https://images.collegepolltracker.com/logos/png/isu3_100_100.png",
+        "name": "Texas A&M",
+        "conference": "SEC",
+        "logo": "https://images.collegepolltracker.com/logos/png/tam_100_100.png",
         "record": "2-0",
         "champ": false
     },
     {
         "id": 17,
-        "name": "SMU",
-        "conference": "ACC",
-        "logo": "https://images.collegepolltracker.com/logos/png/smu_100_100.png",
-        "record": "1-0",
+        "name": "Ole Miss",
+        "conference": "SEC",
+        "logo": "https://images.collegepolltracker.com/logos/png/um4_100_100.png",
+        "record": "2-0",
         "champ": false
     },
     {
         "id": 18,
-        "name": "Oklahoma",
-        "conference": "SEC",
-        "logo": "https://images.collegepolltracker.com/logos/png/ou_100_100.png",
-        "record": "1-0",
-        "champ": false
+        "name": "South Florida",
+        "conference": "AAC",
+        "logo": "https://images.collegepolltracker.com/logos/png/usf2_100_100.png",
+        "record": "2-0",
+        "champ": true
     },
     {
         "id": 19,
-        "name": "Texas A&M",
+        "name": "Alabama",
         "conference": "SEC",
-        "logo": "https://images.collegepolltracker.com/logos/png/tam_100_100.png",
-        "record": "1-0",
+        "logo": "https://images.collegepolltracker.com/logos/png/ua3_100_100.png",
+        "record": "1-1",
         "champ": false
     },
     {
         "id": 20,
-        "name": "Ole Miss",
-        "conference": "SEC",
-        "logo": "https://images.collegepolltracker.com/logos/png/um4_100_100.png",
-        "record": "1-0",
+        "name": "Utah",
+        "conference": "Big 12",
+        "logo": "https://images.collegepolltracker.com/logos/png/u_100_100.png",
+        "record": "2-0",
         "champ": false
     },
     {
         "id": 21,
-        "name": "Alabama",
-        "conference": "SEC",
-        "logo": "https://images.collegepolltracker.com/logos/png/ua3_100_100.png",
-        "record": "0-1",
+        "name": "Texas Tech",
+        "conference": "Big 12",
+        "logo": "https://images.collegepolltracker.com/logos/png/ttu_100_100.png",
+        "record": "2-0",
         "champ": false
     },
     {
         "id": 22,
-        "name": "Tennessee",
-        "conference": "SEC",
-        "logo": "https://images.collegepolltracker.com/logos/png/ut_100_100.png",
-        "record": "1-0",
+        "name": "Indiana",
+        "conference": "Big Ten",
+        "logo": "https://images.collegepolltracker.com/logos/png/iu_100_100.png",
+        "record": "2-0",
         "champ": false
     },
     {
         "id": 23,
-        "name": "Indiana",
+        "name": "Michigan",
         "conference": "Big Ten",
-        "logo": "https://images.collegepolltracker.com/logos/png/iu_100_100.png",
-        "record": "1-0",
+        "logo": "https://images.collegepolltracker.com/logos/png/mu4_100_100.png",
+        "record": "1-1",
         "champ": false
     },
     {
         "id": 24,
-        "name": "Texas Tech",
-        "conference": "Big 12",
-        "logo": "https://images.collegepolltracker.com/logos/png/ttu_100_100.png",
-        "record": "1-0",
+        "name": "Auburn",
+        "conference": "SEC",
+        "logo": "https://images.collegepolltracker.com/logos/png/au_100_100.png",
+        "record": "2-0",
         "champ": false
     },
     {
         "id": 25,
-        "name": "Utah",
-        "conference": "Big 12",
-        "logo": "https://images.collegepolltracker.com/logos/png/u_100_100.png",
-        "record": "1-0",
+        "name": "Missouri",
+        "conference": "SEC",
+        "logo": "https://images.collegepolltracker.com/logos/png/mu2_100_100.png",
+        "record": "2-0",
         "champ": false
     }
 ]

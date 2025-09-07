@@ -48,7 +48,7 @@ conference_map = {
 
     # American (AAC)
     'Memphis': 'AAC', 'Tulane': 'AAC', 'UTSA': 'AAC', 'Temple': 'AAC',
-    'Navy': 'AAC', 'East Carolina': 'AAC', 'USF': 'AAC', 'North Texas': 'AAC',
+    'Navy': 'AAC', 'East Carolina': 'AAC', 'South Florida': 'AAC', 'North Texas': 'AAC',
     'Tulsa': 'AAC', 'Charlotte': 'AAC', 'Rice': 'AAC', 'FAU': 'AAC',
     'UAB': 'AAC',
 

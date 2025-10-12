@@ -34,30 +34,23 @@ fetch('/rankings.json')
 
 
   
-// Modify calculateSeeds to respect manual conference champions
+// Modified calculateSeeds - Top 4 seeds are simply the top 4 ranked teams
 function calculateSeeds() {
     let seeds = new Array(12);
     let assignedTeams = new Set();
     
-    // First pass: Assign seeds 1-4 (one per conference, highest ranked)
-    let seedIndex = 0;
-    rankings.forEach((team) => {
-
-        if (seedIndex < 4 && team.champ) {
-            seeds[seedIndex] = { ...team, seed: seedIndex + 1 };
-            assignedTeams.add(team.id);
-            seedIndex++;
-        }
-        
-    });
+    // First pass: Assign seeds 1-4 to the top 4 ranked teams (regardless of conference champion status)
+    for (let i = 0; i < 4 && i < rankings.length; i++) {
+        seeds[i] = { ...rankings[i], seed: i + 1 };
+        assignedTeams.add(rankings[i].id);
+    }
 
     // Find the 5th highest ranked conference champion not independent or pac 12
     let fifthConfChamp = null;
     let fifthConfChampRank = -1;
     
     rankings.forEach((team, index) => {
-        
-        if (team.champ) {
+        if (team.champ && !assignedTeams.has(team.id)) {
             fifthConfChamp = team;
             fifthConfChampRank = index;
         }

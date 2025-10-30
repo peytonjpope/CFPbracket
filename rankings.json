@@ -80,6 +80,14 @@
         "champ": true
     },
     {
+        "id": 11,
+        "name": "Miami",
+        "conference": "ACC",
+        "logo": "https://images.collegepolltracker.com/logos/png/um2_100_100.png",
+        "record": "6-1",
+        "champ": false
+    },
+    {
         "id": 12,
         "name": "Notre Dame",
         "conference": "Ind",

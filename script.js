@@ -251,7 +251,8 @@ function renderRankings() {
         const trophyButton = document.createElement('button');
         trophyButton.className = 'arrow-button trophy';
         trophyButton.innerHTML = '<img src="/other-logos/goldtrophy.png" alt="";">';
-        trophyButton.disabled = team.conference === 'Ind' || team.conference === 'Pac-12' || team.champ === true;
+        trophyButton.disabled = team.champ === true || (team.name !== 'BYU' && team.name !== 'Virginia' && team.name !== 'Alabama' && team.name !== 'Georgia' && team.name !== 'Indiana' && team.name !== 'Ohio State' && team.name !== 'Texas Tech' && team.name !== 'North Texas' && team.name !== 'Tulane' && team.name !== 'James Madison');
+
         trophyButton.onclick = (e) => {
             e.stopPropagation();
             toggleChampionStatus(index);

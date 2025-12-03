@@ -214,7 +214,7 @@ body {
 
 .team-card:hover {
     background: #3a3a3a;
-    border-color: #c38d13;
+    /* border-color: #c38d13; */
 }
 
 .team-card.dragging {
@@ -269,7 +269,7 @@ body {
 
 .arrow-button {
     background: #444;
-    border: 0px solid #555;
+    border: 1px solid #4a4a4a00;
     color: #c38d13;
     font-size: 14px;
     width: 28px;
@@ -286,8 +286,7 @@ body {
 
 .arrow-button:hover:not(:disabled) {
     background: #555;
-    border-color: #c38d13;
-    transform: scale(1.1);
+    border-color: #e6b530;
 }
 
 .arrow-button:active:not(:disabled) {
@@ -307,9 +306,13 @@ body {
 }
 
 .arrow-button.trophy:hover:not(:disabled) {
-    background: #d4a020;
+    /* background: #d4a020; */
     border-color: #e6b530;
     box-shadow: 0 0 8px rgba(195, 141, 19, 0.5);
+}
+
+.arrow-button.trophy:disabled {
+    opacity: 0.0;
 }
 
 .arrow-button.trophy img {

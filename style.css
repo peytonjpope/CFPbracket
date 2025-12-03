@@ -107,18 +107,38 @@ a:hover {
 }
 
 
+/* Update the body to be a flex container */
 body {
     padding: 0;
     background-color: #1a1a1a;
     color: #e0e0e0;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
 }
 
+/* Make container grow to push footer down */
 .container {
     display: flex;
     justify-content: center;
     max-width: 1400px;
+    width: 100%;
     margin: 0 auto;
     padding: 30px 20px;
+    flex: 1;
+}
+
+.footer {
+    display: flex;
+    justify-content: center;
+    text-align: center;
+    margin-top: auto;
+    color: #999;
+    font-size: 0.8em;
+    background: #2a2a2a;
+    padding: 15px;
+    border-radius: 0;
+    border-top: 1px solid #333;
 }
 
 /* Rankings view - centered */
@@ -147,6 +167,8 @@ body {
     border-radius: 8px;
     box-shadow: 0 4px 6px rgba(0,0,0,0.3);
     border: 1px solid #333;
+    min-width: 320px;
+
 }
 
 .rankings h2 {
@@ -160,19 +182,6 @@ body {
     text-align: center;
 }
 
-.footer {
-    display: flex;
-    justify-content: center;
-    text-align: center;
-    margin-top: 0px;
-    margin-bottom: 5px;
-    color: #999;
-    font-size: 0.8em;
-    background: #2a2a2a;
-    padding: 15px;
-    border-radius: 8px;
-    border: 1px solid #333;
-}
 
 
 .instructions {
@@ -291,12 +300,10 @@ body {
 }
 
 .arrow-button.trophy {
-    /* background: #c38d13; */
-    /* border: 0px solid #c38d13; */
-    margin-right: 2px;
+    margin-right: 4px;
     height: 28px;
-    /* width: ; */
-    /* padding: 0px 13px 0px 13px; */
+    min-width: 28px;
+    padding: 0 5px;
 }
 
 .arrow-button.trophy:hover:not(:disabled) {
@@ -306,8 +313,8 @@ body {
 }
 
 .arrow-button.trophy img {
-    width: 16px;
-    height: 16px;
+    width: 14px;
+    height: 14px;
     object-fit: contain;
 }
 
@@ -526,13 +533,11 @@ body {
 .champion-display {
     margin-top: 20px;
     text-align: center;
-    padding: 20px;
+    padding: 10px;
     background: #343434;
     border-radius: 8px;
     border: 1px solid #444;
-    max-width: 500px;
-    margin-left: auto;
-    margin-right: auto;
+    max-width: 100%;
     opacity: 0;
     transform: translateY(20px);
     visibility: hidden;
@@ -546,16 +551,15 @@ body {
 }
 
 .champion-display img {
-    width: 130px;
+    width: 100px;
     height: auto;
-    margin-bottom: 20px;
+    margin-bottom: 10px;
 }
 
 .champion-display .champion-name {
-    font-size: 2em;
+    font-size: 1.5em;
     color: #ffd700;
-    margin-bottom: 10px;
-    margin-top: 10px;
+    margin-top: 5px;
     font-weight: bold;
     text-transform: uppercase;
 }
@@ -612,25 +616,25 @@ body {
     }
     
     .round {
-        min-width: 200px;
+        min-width: 160px;
         flex-shrink: 0;
     }
     
     .matchup {
-        width: 190px;
-        max-width: 190px;
+        width: 160px;
+        max-width: 160px;
         margin: 0 auto 15px auto;
         padding: 4px;
     }
     
     .team-slot {
-        font-size: 0.9em;
+        font-size: 0.85em;
         padding: 5px;
     }
     
     .bracket-team-logo {
         width: auto;
-        height: 17px;
+        height: 16px;
         margin-right: 5px;
     }
     
@@ -643,11 +647,29 @@ body {
     }
     
     .cfp-logo {
-        width: 80px;
+        width: 70px;
     }
     
     .champion-display {
-        max-width: 90%;
+        padding: 15px;
+        max-width: 100%;
+        opacity: 0;
+        transform: translateY(20px);
+        visibility: hidden;
+        transition: all 0.6s ease-out;
+    }
+    
+    .champion-display img {
+        width: 70px;
+        height: auto;
+        margin-bottom: 11px;
+    }
+    
+    .champion-display .champion-name {
+        font-size: 1.3em;
+        color: #ffd700;
+        margin-bottom: 0px;
+        margin-top: 8px;
     }
 }
 

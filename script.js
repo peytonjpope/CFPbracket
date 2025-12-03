@@ -250,7 +250,7 @@ function renderRankings() {
         
         const trophyButton = document.createElement('button');
         trophyButton.className = 'arrow-button trophy';
-        trophyButton.innerHTML = '<img src="/other-logos/goldtrophy.png" alt="" style="width: 16px; height: 16px;">';
+        trophyButton.innerHTML = '<img src="/other-logos/goldtrophy.png" alt="";">';
         trophyButton.disabled = team.conference === 'Ind' || team.conference === 'Pac-12' || team.champ === true;
         trophyButton.onclick = (e) => {
             e.stopPropagation();
@@ -408,7 +408,7 @@ function renderBracket() {
     if (bracket.champion) {
         championDisplay.innerHTML = `
             <img src="${bracket.champion.logo}" alt="" class="champion-team-logo">
-            <div> 2026 CFP NATIONAL CHAMPION </div>
+            <div>CHAMPION</div>
             <div class="champion-name">
                 ${bracket.champion.name}
             </div>

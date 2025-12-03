@@ -161,11 +161,17 @@ body {
 }
 
 .footer {
+    display: flex;
+    justify-content: center;
     text-align: center;
-    margin-top: 20px;
+    margin-top: 0px;
+    margin-bottom: 5px;
     color: #999;
     font-size: 0.8em;
-
+    background: #2a2a2a;
+    padding: 15px;
+    border-radius: 8px;
+    border: 1px solid #333;
 }
 
 
@@ -199,7 +205,6 @@ body {
 
 .team-card:hover {
     background: #3a3a3a;
-    transform: translateX(5px);
     border-color: #c38d13;
 }
 
@@ -320,15 +325,13 @@ body {
     .team-card {
         width: 100%;
     }
+
 }
 
-/* Alternative: Always show arrow buttons */
-/* Uncomment the below and comment out the media query above if you want arrows always visible */
-/*
 .arrow-buttons {
     display: flex;
 }
-*/
+
 
 .bracket {
     background: #2a2a2a;
@@ -358,6 +361,9 @@ body {
     align-items: flex-start;
     margin: 0 auto;
     width: fit-content;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    overflow-y: hidden;
 }
 
 .round {
@@ -392,7 +398,6 @@ body {
 .matchup:hover {
     background: #3a3a3a;
     border-color: #c38d13;
-    transform: scale(1.02);
     box-shadow: 0 0 15px rgba(0, 0, 0, 0.3);
 }
 
@@ -569,7 +574,6 @@ body {
 
 .dragging {
     opacity: 0.8;
-    transform: scale(1.05);
     transition: transform 0.2s;
 }
 
@@ -595,23 +599,51 @@ body {
     
     #bracket-view .bracket {
         width: 100%;
+        overflow-x: auto;
     }
     
     .bracket-container {
-        flex-direction: column;
-        gap: 20px;
+        flex-direction: row;
+        flex-wrap: nowrap;
+        gap: 15px;
         overflow-x: auto;
         justify-content: flex-start;
+        width: max-content;
     }
     
     .round {
-        min-width: 250px;
+        min-width: 200px;
+        flex-shrink: 0;
     }
     
     .matchup {
-        width: 100%;
-        max-width: 300px;
+        width: 190px;
+        max-width: 190px;
         margin: 0 auto 15px auto;
+        padding: 4px;
+    }
+    
+    .team-slot {
+        font-size: 0.9em;
+        padding: 5px;
+    }
+    
+    .bracket-team-logo {
+        width: auto;
+        height: 17px;
+        margin-right: 5px;
+    }
+    
+    .round-title {
+        font-size: 0.75em;
+    }
+    
+    .round #semifinals {
+        gap: 80px;
+    }
+    
+    .cfp-logo {
+        width: 80px;
     }
     
     .champion-display {

@@ -1,3 +1,22 @@
+// View switching function
+function switchView(viewName) {
+    // Hide all views
+    document.querySelectorAll('.view-section').forEach(section => {
+        section.classList.remove('active');
+    });
+    
+    // Remove active class from all tabs
+    document.querySelectorAll('.tab-button').forEach(button => {
+        button.classList.remove('active');
+    });
+    
+    // Show selected view
+    document.getElementById(viewName + '-view').classList.add('active');
+    
+    // Activate selected tab
+    document.querySelector(`[data-view="${viewName}"]`).classList.add('active');
+}
+
 // Replace your hardcoded initialRankings with:
 let initialRankings = [];
 
@@ -34,55 +53,69 @@ fetch('/rankings.json')
 
 
   
-// Modified calculateSeeds - Top 4 seeds are simply the top 4 ranked teams
+// Modified calculateSeeds - Top 5 conference champions must be in the playoff
 function calculateSeeds() {
     let seeds = new Array(12);
     let assignedTeams = new Set();
     
-    // First pass: Assign seeds 1-4 to the top 4 ranked teams (regardless of conference champion status)
-    for (let i = 0; i < 4 && i < rankings.length; i++) {
-        seeds[i] = { ...rankings[i], seed: i + 1 };
-        assignedTeams.add(rankings[i].id);
-    }
-
-    // Find the 5th highest ranked conference champion not independent or pac 12
-    let fifthConfChamp = null;
-    let fifthConfChampRank = -1;
+    // Collect all conference champions sorted by ranking
+    let confChamps = rankings.filter(team => team.champ);
     
-    rankings.forEach((team, index) => {
-        if (team.champ && !assignedTeams.has(team.id)) {
-            fifthConfChamp = team;
-            fifthConfChampRank = index;
-        }
-    });
-
-    // Second pass: Assign seeds 5-12 (next highest ranked teams)
-    let remainingIndex = 4;
-    rankings.forEach((team) => {
-        if (!assignedTeams.has(team.id) && remainingIndex < 12) {
-            seeds[remainingIndex] = { ...team, seed: remainingIndex + 1 };
-            assignedTeams.add(team.id);
-            remainingIndex++;
-        }
-    });
-
-    // If 5th conference champ exists and wasn't naturally seeded in top 12,
-    // force them into 12th seed and shift others up
-    if (fifthConfChamp && !assignedTeams.has(fifthConfChamp.id)) {
-        // Store teams that need to shift up
-        let teamsToShift = [];
-        for (let i = 4; i < 11; i++) {
-            teamsToShift.push(seeds[i]);
-        }
-        
-        // Shift teams up one position
-        for (let i = 4; i < 11; i++) {
-            seeds[i] = teamsToShift[i - 4];
-        }
-        
-        // Place 5th conference champ in 12th spot
-        seeds[11] = { ...fifthConfChamp, seed: 12 };
+    // Only the top 5 conference champions are guaranteed playoff spots
+    let guaranteedChamps = confChamps.slice(0, 5);
+    
+    // First pass: Fill seeds with highest ranked teams
+    let seedIndex = 0;
+    for (let i = 0; i < rankings.length && seedIndex < 12; i++) {
+        seeds[seedIndex] = { ...rankings[i], seed: seedIndex + 1 };
+        assignedTeams.add(rankings[i].id);
+        seedIndex++;
     }
+    
+    // Check if all top 5 conference champions are in the top 12
+    let missingChamps = guaranteedChamps.filter(champ => !assignedTeams.has(champ.id));
+    
+    // If any of the top 5 conference champions are missing, force them in from highest to lowest ranked
+    if (missingChamps.length > 0) {
+        // Sort missing champs by their ranking (they're already in ranking order from the filter)
+        // For each missing champion, replace the lowest non-champion team
+        missingChamps.forEach(missingChamp => {
+            // Find the lowest seeded team that is NOT in the top 5 conference champions
+            for (let i = 11; i >= 0; i--) {
+                let isGuaranteedChamp = guaranteedChamps.some(champ => champ.id === seeds[i].id);
+                if (!isGuaranteedChamp) {
+                    // Replace this team with the missing conference champion
+                    assignedTeams.delete(seeds[i].id);
+                    seeds[i] = { ...missingChamp, seed: i + 1 };
+                    assignedTeams.add(missingChamp.id);
+                    break;
+                }
+            }
+        });
+        
+        // Now we need to sort the replaced teams to maintain proper seeding order
+        // Get all teams that were inserted
+        let insertedPositions = [];
+        missingChamps.forEach(champ => {
+            let pos = seeds.findIndex(s => s.id === champ.id);
+            if (pos !== -1) {
+                insertedPositions.push(pos);
+            }
+        });
+        
+        // Sort inserted positions from highest to lowest (11, 10, 9...)
+        insertedPositions.sort((a, b) => b - a);
+        
+        // Assign missing champs to these positions in ranking order (highest ranked gets highest seed)
+        missingChamps.forEach((champ, index) => {
+            seeds[insertedPositions[index]] = { ...champ, seed: insertedPositions[index] + 1 };
+        });
+    }
+    
+    // Re-assign seed numbers based on final positions
+    seeds.forEach((team, index) => {
+        team.seed = index + 1;
+    });
 
     return seeds;
 }
@@ -117,7 +150,27 @@ function calculateSeeds() {
 
 // Add this to the existing script
 
+// Function to move team up in rankings
+function moveTeamUp(index) {
+    if (index > 0) {
+        const newRankings = [...rankings];
+        [newRankings[index], newRankings[index - 1]] = [newRankings[index - 1], newRankings[index]];
+        rankings = newRankings;
+        renderRankings();
+        updateBracket();
+    }
+}
 
+// Function to move team down in rankings
+function moveTeamDown(index) {
+    if (index < rankings.length - 1) {
+        const newRankings = [...rankings];
+        [newRankings[index], newRankings[index + 1]] = [newRankings[index + 1], newRankings[index]];
+        rankings = newRankings;
+        renderRankings();
+        updateBracket();
+    }
+}
 
 // Modify renderRankings to add right-click event for conference champion selection
 function renderRankings() {
@@ -125,24 +178,6 @@ function renderRankings() {
     rankingsList.innerHTML = '';
     
     const seeds = calculateSeeds();
-    
-    // Find the 5th conference champion
-    const usedConferences = new Set();
-    let fifthConfChamp = null;
-    
-    // Get conferences of top 4 seeds
-    seeds.slice(0, 4).forEach(team => {
-        usedConferences.add(team.conference);
-    });
-    
-    // Find the next highest ranked conference champion not independent or pac 12
-    for (let i = 4; i < 12; i++) {
-        if (seeds[i] && !usedConferences.has(seeds[i].conference) && 
-            seeds[i].conference !== 'Ind' && seeds[i].conference !== 'Pac-12') {
-            fifthConfChamp = seeds[i];
-            break;
-        }
-    }
 
     rankings.forEach((team, index) => {
         const rankingNumber = document.createElement('div');
@@ -161,20 +196,11 @@ function renderRankings() {
         teamCard.dataset.index = index;
         teamCard.dataset.conference = team.conference;
 
-        // Determine conference champion logic
-        let conferenceClass = '';
+        // Determine trophy display based on conference champion status
         let trophy = '';
         
-        // Check if this team is a manually selected conference champion
-
-        // Check if this team is a replaced manual conference champion
-        
-        // Prioritize manual selection, then default to original logic
-        if (team.champ && teamSeed < 4) {
-            //conferenceClass = 'manual-conference-champ';
+        if (team.champ) {
             trophy = '/other-logos/goldtrophy.png';
-        } else if (team.champ && teamSeed > 4) {
-            trophy = '/other-logos/silvertrophy.png';
         } else {
             trophy = '/other-logos/notrophy.png';
         }
@@ -188,28 +214,58 @@ function renderRankings() {
                 <div class="team-name">${team.name}</div>
                 <div class="conference-info"> 
                     <div class="team-record">(${team.record})</div>
-                    <div class="team-conference ${conferenceClass}">${team.conference}</div>
+                    <div class="team-conference">${team.conference}</div>
                     <div class="trophy"><img src="${trophy}" alt="Trophy"></div>
                 </div>
             </div>
         `;
 
+        // Add arrow buttons container
+        const arrowButtons = document.createElement('div');
+        arrowButtons.className = 'arrow-buttons';
+        
+        const upButton = document.createElement('button');
+        upButton.className = 'arrow-button up';
+        upButton.innerHTML = '↑';
+        upButton.disabled = index === 0;
+        upButton.onclick = (e) => {
+            e.stopPropagation();
+            moveTeamUp(index);
+        };
+        
+        const downButton = document.createElement('button');
+        downButton.className = 'arrow-button down';
+        downButton.innerHTML = '↓';
+        downButton.disabled = index === rankings.length - 1;
+        downButton.onclick = (e) => {
+            e.stopPropagation();
+            moveTeamDown(index);
+        };
+        
+        arrowButtons.appendChild(upButton);
+        arrowButtons.appendChild(downButton);
+        teamCard.appendChild(arrowButtons);
+
         teamCard.addEventListener('contextmenu', function(e) {
             e.preventDefault();
 
-        
-
-            // Check if this team is a conference champion
-            if (team.champ || team.conference === 'Ind' || team.conference === 'Pac-12') {
+            // Don't allow changing champion status for Ind or Pac-12
+            if (team.conference === 'Ind' || team.conference === 'Pac-12') {
                 return;
+            }
+
+            // Toggle conference champion status
+            if (team.champ) {
+                // If already a champion, remove champion status
+                team.champ = false;
             } else {
-                //iterate through all teams and set champ to false
+                // Set this team as conference champion and remove from others in same conference
                 for (let i = 0; i < rankings.length; i++) {
                     if (rankings[i].conference === team.conference) {
-                    rankings[i].champ = false;
+                        rankings[i].champ = false;
+                    }
                 }
                 team.champ = true;
-            }
             }
             
             renderRankings();
@@ -230,14 +286,13 @@ function renderRankings() {
         rankingsList.appendChild(wrapper);
     });
 }
-  
-  // Modify the renderBracket function to include logos in matchups
-  function renderBracket() {
-// Update first round rendering
+
+function renderBracket() {
+    // Update first round rendering with bowl logos
     const firstRound = document.getElementById('first-round');
     firstRound.innerHTML = bracket.firstRound.map((matchup, index) => `
-        <div class="matchup">
-            <div class="team-slot ${isWinner('firstRound', index, matchup.higher) ? 'winner' : ''}" 
+        <div class="matchup" data-round="firstRound" data-index="${index}">
+            <div class="team-slot ${isWinner('firstRound', index, matchup.higher) ? 'winner' : ''}"
                  onclick="handleTeamSelect('firstRound', ${index}, 'higher')">
                 <img src="${matchup.higher.logo}" alt="" class="bracket-team-logo">
                 <span>${matchup.higher.seed} ${matchup.higher.name}</span>
@@ -245,89 +300,91 @@ function renderRankings() {
             <div class="team-slot ${isWinner('firstRound', index, matchup.lower) ? 'winner' : ''}"
                  onclick="handleTeamSelect('firstRound', ${index}, 'lower')">
                 <img src="${matchup.lower.logo}" alt="" class="bracket-team-logo">
-                <span>${matchup.lower.seed} ${matchup.lower.name} </span>
+                <span>${matchup.lower.seed} ${matchup.lower.name}</span>
             </div>
         </div>
     `).join('');
-  
-      // Update quarterfinals rendering
-      const quarterfinals = document.getElementById('quarterfinals');
-      quarterfinals.innerHTML = bracket.quarterfinals.map((matchup, index) => `
-          <div class="matchup">
-          
-              <div class="team-slot ${isWinner('quarterfinals', index, matchup.higher) ? 'winner' : ''}"
-                   onclick="handleTeamSelect('quarterfinals', ${index}, 'higher')">
-                  <img src="${matchup.higher.logo}" alt="" class="bracket-team-logo">
-                  <span>${matchup.higher.seed} ${matchup.higher.name}</span>
-              </div>
-              <div class="team-slot ${matchup.winner ? (isWinner('quarterfinals', index, matchup.winner) ? 'winner' : '') : ''}"
-                   onclick="handleTeamSelect('quarterfinals', ${index}, 'lower')">
-                  ${matchup.winner ? `
-                      <img src="${matchup.winner.logo}" alt="" class="bracket-team-logo">
-                      <span>${matchup.winner.seed} ${matchup.winner.name}</span>
-                  ` : '-'}
-              </div>
-          </div>
-      `).join('');
-  
-      // Update semifinals rendering with logos
-      const semifinals = document.getElementById('semifinals');
-      semifinals.innerHTML = bracket.semifinals.map((matchup, index) => `
-          <div class="matchup">
-              <div class="team-slot ${isWinner('semifinals', index, matchup?.team1) ? 'winner' : ''}"
-                   onclick="handleTeamSelect('semifinals', ${index}, 'team1')">
-                  ${matchup?.team1 ? `
-                      <img src="${matchup.team1.logo}" alt="" class="bracket-team-logo">
-                      <span>${matchup.team1.seed} ${matchup.team1.name}</span>
-                  ` : '-'}
-              </div>
-              <div class="team-slot ${isWinner('semifinals', index, matchup?.team2) ? 'winner' : ''}"
-                   onclick="handleTeamSelect('semifinals', ${index}, 'team2')">
-                  ${matchup?.team2 ? `
-                      <img src="${matchup.team2.logo}" alt="" class="bracket-team-logo">
-                      <span>${matchup.team2.seed} ${matchup.team2.name}</span>
-                  ` : '-'}
-              </div>
-          </div>
-      `).join('');
-  
-      // Update championship rendering
-      const championship = document.getElementById('championship');
-      championship.innerHTML = `
-          <div class="matchup">
-              <div class="team-slot ${isWinner('championship', 0, bracket.championship?.team1) ? 'winner' : ''}"
-                   onclick="handleTeamSelect('championship', 0, 'team1')">
-                  ${bracket.championship?.team1 ? `
-                      <img src="${bracket.championship.team1.logo}" alt="" class="bracket-team-logo">
-                      <span>${bracket.championship.team1.seed} ${bracket.championship.team1.name}</span>
-                  ` : '-'}
-              </div>
-              <div class="team-slot ${isWinner('championship', 0, bracket.championship?.team2) ? 'winner' : ''}"
-                   onclick="handleTeamSelect('championship', 0, 'team2')">
-                  ${bracket.championship?.team2 ? `
-                      <img src="${bracket.championship.team2.logo}" alt="" class="bracket-team-logo">
-                      <span>${bracket.championship.team2.seed} ${bracket.championship.team2.name}</span>
-                  ` : '-'}
-              </div>
-          </div>
-      `;
-  
-      // Update champion display with logo
-      const championDisplay = document.getElementById('champion-display');
-      if (bracket.champion) {
-          championDisplay.innerHTML = `
-              <img src="${bracket.champion.logo}" alt="" class="champion-team-logo">
-              <div> 2025 CFP NATIONAL CHAMPION </div>
-              <div class="champion-name">
-                  ${bracket.champion.name}
-              </div>
-          `;
-          championDisplay.classList.add('show');
-      } else {
-          championDisplay.innerHTML = '';
-          championDisplay.classList.remove('show');
-      }
-  }
+
+    // Update quarterfinals rendering with bowl logos
+    const quarterfinals = document.getElementById('quarterfinals');
+    quarterfinals.innerHTML = bracket.quarterfinals.map((matchup, index) => {
+        return `
+            <div class="matchup" data-round="quarterfinals" data-index="${index}">
+                <div class="team-slot ${isWinner('quarterfinals', index, matchup.higher) ? 'winner' : ''}"
+                     onclick="handleTeamSelect('quarterfinals', ${index}, 'higher')">
+                    <img src="${matchup.higher.logo}" alt="" class="bracket-team-logo">
+                    <span>${matchup.higher.seed} ${matchup.higher.name}</span>
+                </div>
+                <div class="team-slot ${isWinner('quarterfinals', index, matchup.winner) ? 'winner' : ''}"
+                     onclick="handleTeamSelect('quarterfinals', ${index}, 'winner')">
+                    ${matchup.winner ? `
+                        <img src="${matchup.winner.logo}" alt="" class="bracket-team-logo">
+                        <span>${matchup.winner.seed} ${matchup.winner.name}</span>
+                    ` : '-'}
+                </div>
+            </div>
+        `;
+    }).join('');
+
+    // Update semifinals rendering
+    const semifinals = document.getElementById('semifinals');
+    semifinals.innerHTML = bracket.semifinals.map((matchup, index) => {
+        return `
+        <div class="matchup" data-round="semifinals" data-index="${index}">
+            <div class="team-slot ${isWinner('semifinals', index, matchup?.team1) ? 'winner' : ''}"
+                 onclick="handleTeamSelect('semifinals', ${index}, 'team1')">
+                ${matchup?.team1 ? `
+                    <img src="${matchup.team1.logo}" alt="" class="bracket-team-logo">
+                    <span>${matchup.team1.seed} ${matchup.team1.name}</span>
+                ` : '-'}
+            </div>
+            <div class="team-slot ${isWinner('semifinals', index, matchup?.team2) ? 'winner' : ''}"
+                 onclick="handleTeamSelect('semifinals', ${index}, 'team2')">
+                ${matchup?.team2 ? `
+                    <img src="${matchup.team2.logo}" alt="" class="bracket-team-logo">
+                    <span>${matchup.team2.seed} ${matchup.team2.name}</span>
+                ` : '-'}
+            </div>
+        </div>
+    `}).join('');
+
+    // Update championship rendering
+    const championship = document.getElementById('championship');
+    championship.innerHTML = `
+        <div class="matchup">
+            <div class="team-slot ${isWinner('championship', 0, bracket.championship?.team1) ? 'winner' : ''}"
+                 onclick="handleTeamSelect('championship', 0, 'team1')">
+                ${bracket.championship?.team1 ? `
+                    <img src="${bracket.championship.team1.logo}" alt="" class="bracket-team-logo">
+                    <span>${bracket.championship.team1.seed} ${bracket.championship.team1.name}</span>
+                ` : '-'}
+            </div>
+            <div class="team-slot ${isWinner('championship', 0, bracket.championship?.team2) ? 'winner' : ''}"
+                 onclick="handleTeamSelect('championship', 0, 'team2')">
+                ${bracket.championship?.team2 ? `
+                    <img src="${bracket.championship.team2.logo}" alt="" class="bracket-team-logo">
+                    <span>${bracket.championship.team2.seed} ${bracket.championship.team2.name}</span>
+                ` : '-'}
+            </div>
+        </div>
+    `;
+
+    // Update champion display with logo
+    const championDisplay = document.getElementById('champion-display');
+    if (bracket.champion) {
+        championDisplay.innerHTML = `
+            <img src="${bracket.champion.logo}" alt="" class="champion-team-logo">
+            <div> 2026 CFP NATIONAL CHAMPION </div>
+            <div class="champion-name">
+                ${bracket.champion.name}
+            </div>
+        `;
+        championDisplay.classList.add('show');
+    } else {
+        championDisplay.innerHTML = '';
+        championDisplay.classList.remove('show');
+    }
+}
   
   // Helper function to create champion display if it doesn't exist
   function createChampionDisplay() {
@@ -488,7 +545,7 @@ function isWinner(round, index, team) {
       championDisplay.classList.remove('show');
   }
   
-  
+
 
   
   // Initial render

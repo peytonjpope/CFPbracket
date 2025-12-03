@@ -8,49 +8,59 @@
     <link rel="icon" href="/media/lilp.png" type="image/x-icon">
 </head>
 <body>
-    <div class="container">
-        <div class="rankings">
-            <h2>Rankings</h2>
-            <div id="rankings-list"></div>
-        </div>
-        <div class="bracket">
-            <h2>Bracket</h2>
-            <div class="bracket-container">
-                <div class="round">
-                    <div class="round-title">First Round</div>
-                    <div id="first-round"></div>
-                    <input type="button" class="reset-button" onclick="resetBracket()" value="Reset Bracket">
-                </div>
-                <div class="round">
-
-                </div>
-                <div class="round">
-                    <div class="round-title quarters">Quarterfinals</div>
-                    <div id="quarterfinals"></div>
-                </div>
-                <div class="round">
-                    <div class="round-title semis">Semifinals</div>
-                    <div id="semifinals"></div>
-                </div>
-                <div class="round">
-                    <div class="round-title championship">
-                        <div>
-                            <img src="/other-logos/cfplogo.png" alt="CFP Logo" class="cfp-logo">
-                        </div>
-                        National Championship
-                    </div>
-                    <div id="championship"></div>
-                </div>                
-            </div>
-            <div id="champion-display" class="champion-display">
-            </div> 
-            <div class="instructions">
-                <p>Drag and Drop: Adjust Rankings</p>
-                <p>Right-Click Team: Assign Conference Champion</p>
-                <p>Trophy: Top 5 Conference Champions/Leaders (Auto-bid)</p>
-                <p>Golden Trophy: Top 4 Conference Champions/Leaders (1st Round Bye)</p>
-            </div>
+    <!-- Tab Navigation -->
+    <div class="tab-navigation">
+        <button class="tab-button active" data-view="rankings" onclick="switchView('rankings')">RANKINGS</button>
+        <button class="tab-button" data-view="bracket" onclick="switchView('bracket')">BRACKET</button>
     </div>
+
+    <div class="container">
+        <!-- Rankings View -->
+        <div class="view-section active" id="rankings-view">
+            <div class="rankings">
+                <div id="rankings-list"></div>
+            </div>
+        </div>
+
+        <!-- Bracket View -->
+        <div class="view-section" id="bracket-view">
+            <div class="bracket">
+                <div class="bracket-container">
+                    <div class="round">
+                        <div class="round-title">First Round</div>
+                        <div id="first-round"></div>
+                        <input type="button" class="reset-button" onclick="resetBracket()" value="Reset Bracket">
+                    </div>
+                    <div class="round">
+
+                    </div>
+                    <div class="round">
+                        <div class="round-title quarters">Quarterfinals</div>
+                        <div id="quarterfinals"></div>
+                    </div>
+                    <div class="round">
+                        <div class="round-title semis">Semifinals</div>
+                        <div id="semifinals"></div>
+                    </div>
+                    <div class="round">
+                        <div class="round-title championship">
+                            <div>
+                                <img src="/other-logos/cfplogo.png" alt="CFP Logo" class="cfp-logo">
+                            </div>
+                            National Championship
+                        </div>
+                        <div id="championship"></div>
+                    </div>                
+                </div>
+                <div id="champion-display" class="champion-display">
+                </div> 
+                <div class="instructions">
+                    <p>Click team to advance in bracket</p>
+                    <p>Right-Click Team (Rankings): Assign Conference Champion</p>
+                    <p>Trophy: Top 5 Conference Champions (Auto-bid)</p>
+                </div>
+            </div>
+        </div>
     </div>
     <footer class="footer">
         <a href="https://github.com/peytonjpope/CFPbracket">Source Code</a>

@@ -5,6 +5,81 @@
     font-family: Arial, sans-serif;
 }
 
+/* Tab Navigation Styles */
+.tab-navigation {
+    display: flex;
+    justify-content: center;
+    gap: 0;
+    background-color: #1a1a1a;
+    padding: 20px 0 10px 0;
+    border-bottom: 1px solid #333;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+}
+
+.tab-button {
+    background: none;
+    border: none;
+    color: #999;
+    font-size: 1.1em;
+    font-weight: 600;
+    letter-spacing: 2px;
+    padding: 12px 40px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    border-bottom: 3px solid transparent;
+    position: relative;
+    outline: none;
+}
+
+.tab-button:focus {
+    outline: none;
+}
+
+.tab-button:hover {
+    color: #c38d13;
+}
+
+.tab-button.active {
+    color: #c38d13;
+    border-bottom: 3px solid #c38d13;
+}
+
+/* View sections */
+.view-section {
+    display: none;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    width: 100%;
+}
+
+.view-section.active {
+    display: flex;
+    justify-content: center;
+    opacity: 1;
+    animation: fadeIn 0.3s ease;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Mobile responsive tabs */
+@media (max-width: 768px) {
+    .tab-button {
+        padding: 12px 30px;
+        font-size: 1em;
+    }
+}
+
 a {
     color: #c38d13;
     text-decoration: none;
@@ -33,20 +108,40 @@ a:hover {
 
 
 body {
-    padding: 20px;
+    padding: 0;
     background-color: #1a1a1a;
     color: #e0e0e0;
 }
 
 .container {
     display: flex;
-    gap: 20px;
-    max-width: 1200px;
+    justify-content: center;
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 30px 20px;
+}
+
+/* Rankings view - centered */
+#rankings-view {
+    width: 100%;
+}
+
+#rankings-view .rankings {
+    width: 100%;
+    max-width: 520px;
     margin: 0 auto;
 }
 
+/* Bracket view - centered */
+#bracket-view {
+    width: 100%;
+}
+
+#bracket-view .bracket {
+    display: block;
+}
+
 .rankings {
-    width: 300px;
     background: #2a2a2a;
     padding: 15px;
     border-radius: 8px;
@@ -82,10 +177,8 @@ body {
     line-height: 25px;
     text-align: center;
     padding: 1em 0;
-    position: relative;
-    margin-top: 240px;
-    bottom: 0px;
-    
+    margin-top: 20px;
+    border-radius: 4px;
 }
 
 
@@ -99,8 +192,9 @@ body {
     cursor: move;
     transition: all 0.2s ease;
     border: 1px solid #444;
-    width: 85%;
+    width: 100%;
     margin-left: 1px;
+    position: relative;
 }
 
 .team-card:hover {
@@ -151,13 +245,78 @@ body {
     
 }
 
+/* Arrow buttons styles */
+.arrow-buttons {
+    display: none; /* Hidden by default on desktop */
+    flex-direction: row;
+    gap: 2px;
+    margin-left: 8px;
+}
+
+.arrow-button {
+    background: #444;
+    border: 1px solid #555;
+    color: #c38d13;
+    font-size: 14px;
+    width: 28px;
+    height: 28px;
+    border-radius: 3px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s ease;
+    padding: 0;
+    line-height: 1;
+}
+
+.arrow-button:hover:not(:disabled) {
+    background: #555;
+    border-color: #c38d13;
+    transform: scale(1.1);
+}
+
+.arrow-button:active:not(:disabled) {
+    transform: scale(0.95);
+}
+
+.arrow-button:disabled {
+    opacity: 0.3;
+    cursor: not-allowed;
+}
+
+/* Show arrow buttons on mobile/touch devices */
+@media (hover: none) and (pointer: coarse), (max-width: 768px) {
+    .arrow-buttons {
+        display: flex;
+    }
+    
+    .team-card {
+        cursor: default; /* Remove drag cursor on mobile */
+    }
+    
+    /* Adjust team card width to accommodate arrow buttons */
+    .team-card {
+        width: 80%;
+    }
+}
+
+/* Alternative: Always show arrow buttons */
+/* Uncomment the below and comment out the media query above if you want arrows always visible */
+/*
+.arrow-buttons {
+    display: flex;
+}
+*/
+
 .bracket {
-    flex-grow: 1;
     background: #2a2a2a;
     padding: 15.5px;
     border-radius: 8px;
     box-shadow: 0 4px 6px rgba(0,0,0,0.3);
     border: 1px solid #333;
+    margin: 0 auto;
+    width: fit-content;
 }
 
 .bracket h2 {
@@ -174,6 +333,10 @@ body {
 .bracket-container {
     display: flex;
     gap: 25px;
+    justify-content: flex-start;
+    align-items: flex-start;
+    margin: 0 auto;
+    width: fit-content;
 }
 
 .round {
@@ -298,16 +461,6 @@ body {
     justify-content: center;
 }
 
-.bowl-logo {
-    width: 40px;
-    height: 40px;
-    display: flex;
-    align-items: center;
-    margin-top: 30px;
-    margin-bottom: 30px;
-    margin-right: -15px;
-}
-
 .trophy {
     max-width: 13px;
     height: 16px;
@@ -345,14 +498,15 @@ body {
 }
 
 .champion-display {
-    margin-top: -50px;
+    margin-top: 20px;
     text-align: center;
     padding: 20px;
     background: #343434;
     border-radius: 8px;
     border: 1px solid #444;
-    width: 35%;
-    margin-left: 540px;
+    max-width: 500px;
+    margin-left: auto;
+    margin-right: auto;
     opacity: 0;
     transform: translateY(20px);
     visibility: hidden;
@@ -407,3 +561,74 @@ body {
     }
 }
 
+/* Mobile Responsive Adjustments */
+@media (max-width: 768px) {
+    .container {
+        padding: 20px 15px;
+        min-height: auto;
+    }
+    
+    #rankings-view .rankings {
+        max-width: 100%;
+    }
+    
+    #bracket-view .bracket {
+        width: 100%;
+    }
+    
+    .bracket-container {
+        flex-direction: column;
+        gap: 20px;
+        overflow-x: auto;
+        justify-content: flex-start;
+    }
+    
+    .round {
+        min-width: 250px;
+    }
+    
+    .matchup {
+        width: 100%;
+        max-width: 300px;
+        margin: 0 auto 15px auto;
+    }
+    
+    .champion-display {
+        max-width: 90%;
+    }
+}
+
+@media (max-width: 480px) {
+    .tab-button {
+        padding: 10px 20px;
+        font-size: 0.9em;
+        letter-spacing: 1px;
+    }
+    
+    .team-name {
+        font-size: 0.9em;
+    }
+    
+    .team-conference,
+    .team-record {
+        font-size: 0.7em;
+    }
+    
+    .team-number {
+        font-size: 0.9em;
+    }
+    
+    .round-title {
+        font-size: 0.8em;
+    }
+    
+    .team-slot {
+        font-size: 0.85em;
+        padding: 6px;
+    }
+    
+    .instructions {
+        font-size: 12px;
+        line-height: 20px;
+    }
+}

@@ -55,8 +55,7 @@ fetch('/rankings.json')
   
 // Modified calculateSeeds - Top 5 conference champions must be in the playoff
 function calculateSeeds() {
-    let seeds = new Array(12);
-    let assignedTeams = new Set();
+    let seeds = [];
     
     // Collect all conference champions sorted by ranking
     let confChamps = rankings.filter(team => team.champ);
@@ -64,58 +63,35 @@ function calculateSeeds() {
     // Only the top 5 conference champions are guaranteed playoff spots
     let guaranteedChamps = confChamps.slice(0, 5);
     
-    // First pass: Fill seeds with highest ranked teams
-    let seedIndex = 0;
-    for (let i = 0; i < rankings.length && seedIndex < 12; i++) {
-        seeds[seedIndex] = { ...rankings[i], seed: seedIndex + 1 };
-        assignedTeams.add(rankings[i].id);
-        seedIndex++;
-    }
+    // Start with all teams in top 12 that aren't being replaced
+    let teamsInPlayoff = [];
     
-    // Check if all top 5 conference champions are in the top 12
-    let missingChamps = guaranteedChamps.filter(champ => !assignedTeams.has(champ.id));
-    
-    // If any of the top 5 conference champions are missing, force them in from highest to lowest ranked
-    if (missingChamps.length > 0) {
-        // Sort missing champs by their ranking (they're already in ranking order from the filter)
-        // For each missing champion, replace the lowest non-champion team
-        missingChamps.forEach(missingChamp => {
-            // Find the lowest seeded team that is NOT in the top 5 conference champions
-            for (let i = 11; i >= 0; i--) {
-                let isGuaranteedChamp = guaranteedChamps.some(champ => champ.id === seeds[i].id);
-                if (!isGuaranteedChamp) {
-                    // Replace this team with the missing conference champion
-                    assignedTeams.delete(seeds[i].id);
-                    seeds[i] = { ...missingChamp, seed: i + 1 };
-                    assignedTeams.add(missingChamp.id);
-                    break;
-                }
-            }
-        });
-        
-        // Now we need to sort the replaced teams to maintain proper seeding order
-        // Get all teams that were inserted
-        let insertedPositions = [];
-        missingChamps.forEach(champ => {
-            let pos = seeds.findIndex(s => s.id === champ.id);
-            if (pos !== -1) {
-                insertedPositions.push(pos);
-            }
-        });
-        
-        // Sort inserted positions from highest to lowest (11, 10, 9...)
-        insertedPositions.sort((a, b) => b - a);
-        
-        // Assign missing champs to these positions in ranking order (highest ranked gets highest seed)
-        missingChamps.forEach((champ, index) => {
-            seeds[insertedPositions[index]] = { ...champ, seed: insertedPositions[index] + 1 };
-        });
-    }
-    
-    // Re-assign seed numbers based on final positions
-    seeds.forEach((team, index) => {
-        team.seed = index + 1;
+    // First, add all top 5 conference champions in order of their ranking
+    guaranteedChamps.forEach(champ => {
+        teamsInPlayoff.push(champ);
     });
+    
+    // Then add remaining highest-ranked teams until we have 12
+    for (let i = 0; i < rankings.length && teamsInPlayoff.length < 12; i++) {
+        let team = rankings[i];
+        // Only add if not already in the playoff
+        if (!teamsInPlayoff.some(t => t.id === team.id)) {
+            teamsInPlayoff.push(team);
+        }
+    }
+    
+    // Now sort the 12 playoff teams by their original ranking
+    teamsInPlayoff.sort((a, b) => {
+        let rankA = rankings.findIndex(t => t.id === a.id);
+        let rankB = rankings.findIndex(t => t.id === b.id);
+        return rankA - rankB;
+    });
+    
+    // Assign seeds based on sorted order
+    seeds = teamsInPlayoff.map((team, index) => ({
+        ...team,
+        seed: index + 1
+    }));
 
     return seeds;
 }

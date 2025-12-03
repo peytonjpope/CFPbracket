@@ -172,6 +172,30 @@ function moveTeamDown(index) {
     }
 }
 
+// Function to toggle conference champion status
+function toggleChampionStatus(index) {
+    const team = rankings[index];
+    
+    // Don't allow changing champion status for Ind or Pac-12
+    if (team.conference === 'Ind' || team.conference === 'Pac-12') {
+        return;
+    }
+
+    // Only allow setting a new champion, not removing an existing one
+    if (!team.champ) {
+        // Set this team as conference champion and remove from others in same conference
+        for (let i = 0; i < rankings.length; i++) {
+            if (rankings[i].conference === team.conference) {
+                rankings[i].champ = false;
+            }
+        }
+        team.champ = true;
+        
+        renderRankings();
+        updateBracket();
+    }
+}
+
 // Modify renderRankings to add right-click event for conference champion selection
 function renderRankings() {
     const rankingsList = document.getElementById('rankings-list');
@@ -224,6 +248,15 @@ function renderRankings() {
         const arrowButtons = document.createElement('div');
         arrowButtons.className = 'arrow-buttons';
         
+        const trophyButton = document.createElement('button');
+        trophyButton.className = 'arrow-button trophy';
+        trophyButton.innerHTML = '<img src="/other-logos/goldtrophy.png" alt="" style="width: 16px; height: 16px;">';
+        trophyButton.disabled = team.conference === 'Ind' || team.conference === 'Pac-12' || team.champ === true;
+        trophyButton.onclick = (e) => {
+            e.stopPropagation();
+            toggleChampionStatus(index);
+        };
+        
         const upButton = document.createElement('button');
         upButton.className = 'arrow-button up';
         upButton.innerHTML = '↑';
@@ -242,6 +275,7 @@ function renderRankings() {
             moveTeamDown(index);
         };
         
+        arrowButtons.appendChild(trophyButton);
         arrowButtons.appendChild(upButton);
         arrowButtons.appendChild(downButton);
         teamCard.appendChild(arrowButtons);

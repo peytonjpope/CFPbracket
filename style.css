@@ -11,7 +11,7 @@
     justify-content: center;
     gap: 0;
     background-color: #1a1a1a;
-    padding: 20px 0 10px 0;
+    padding: 20px 0 0px 0;
     border-bottom: 1px solid #333;
     position: sticky;
     top: 0;
@@ -255,7 +255,7 @@ body {
 
 .arrow-button {
     background: #444;
-    border: 1px solid #555;
+    border: 0px solid #555;
     color: #c38d13;
     font-size: 14px;
     width: 28px;
@@ -285,6 +285,27 @@ body {
     cursor: not-allowed;
 }
 
+.arrow-button.trophy {
+    /* background: #c38d13; */
+    /* border: 0px solid #c38d13; */
+    margin-right: 2px;
+    height: 28px;
+    /* width: ; */
+    /* padding: 0px 13px 0px 13px; */
+}
+
+.arrow-button.trophy:hover:not(:disabled) {
+    background: #d4a020;
+    border-color: #e6b530;
+    box-shadow: 0 0 8px rgba(195, 141, 19, 0.5);
+}
+
+.arrow-button.trophy img {
+    width: 16px;
+    height: 16px;
+    object-fit: contain;
+}
+
 /* Show arrow buttons on mobile/touch devices */
 @media (hover: none) and (pointer: coarse), (max-width: 768px) {
     .arrow-buttons {
@@ -297,7 +318,7 @@ body {
     
     /* Adjust team card width to accommodate arrow buttons */
     .team-card {
-        width: 80%;
+        width: 100%;
     }
 }
 

@@ -1,18 +1,18 @@
 [
     {
       "id": 1,
-      "name": "Ohio State",
+      "name": "Indiana",
       "conference": "Big Ten",
-      "logo": "/team-logos/ohio-state.png",
-      "record": "12-0",
+      "logo": "https://images.collegepolltracker.com/logos/png/iu_100_100.png",
+      "record": "13-0",
       "champ": true
     },
     {
       "id": 2,
-      "name": "Indiana",
+      "name": "Ohio State",
       "conference": "Big Ten",
-      "logo": "https://images.collegepolltracker.com/logos/png/iu_100_100.png",
-      "record": "12-0",
+      "logo": "/team-logos/ohio-state.png",
+      "record": "12-1",
       "champ": false
     },
     {
@@ -20,7 +20,7 @@
       "name": "Georgia",
       "conference": "SEC",
       "logo": "https://images.collegepolltracker.com/logos/png/ug_100_100.png",
-      "record": "11-1",
+      "record": "12-1",
       "champ": true
     },
     {
@@ -28,7 +28,7 @@
       "name": "Texas Tech",
       "conference": "Big 12",
       "logo": "https://images.collegepolltracker.com/logos/png/ttu_100_100.png",
-      "record": "11-1",
+      "record": "12-1",
       "champ": true
     },
     {
@@ -68,11 +68,19 @@
       "name": "Alabama",
       "conference": "SEC",
       "logo": "https://images.collegepolltracker.com/logos/png/ua3_100_100.png",
-      "record": "10-2",
+      "record": "10-3",
       "champ": false
     },
     {
       "id": 10,
+      "name": "Miami (FL)",
+      "conference": "ACC",
+      "logo": "https://images.collegepolltracker.com/logos/png/um2_100_100.png",
+      "record": "10-2",
+      "champ": false
+    },
+    {
+      "id": 11,
       "name": "Notre Dame",
       "conference": "Ind",
       "logo": "https://images.collegepolltracker.com/logos/png/und2_100_100.png",
@@ -80,19 +88,11 @@
       "champ": false
     },
     {
-      "id": 11,
+      "id": 12,
       "name": "BYU",
       "conference": "Big 12",
       "logo": "https://images.collegepolltracker.com/logos/png/byu_100_100.png",
-      "record": "11-1",
-      "champ": false
-    },
-    {
-      "id": 12,
-      "name": "Miami (FL)",
-      "conference": "ACC",
-      "logo": "https://images.collegepolltracker.com/logos/png/um2_100_100.png",
-      "record": "10-2",
+      "record": "11-2",
       "champ": false
     },
     {
@@ -129,14 +129,6 @@
     },
     {
       "id": 17,
-      "name": "Virginia",
-      "conference": "ACC",
-      "logo": "https://images.collegepolltracker.com/logos/png/uv_100_100.png",
-      "record": "10-2",
-      "champ": true
-    },
-    {
-      "id": 18,
       "name": "Arizona",
       "conference": "Big 12",
       "logo": "https://images.collegepolltracker.com/logos/png/ua_100_100.png",
@@ -144,11 +136,19 @@
       "champ": false
     },
     {
-      "id": 19,
+      "id": 18,
       "name": "Michigan",
       "conference": "Big Ten",
       "logo": "https://images.collegepolltracker.com/logos/png/mu4_100_100.png",
       "record": "9-3",
+      "champ": false
+    },
+    {
+      "id": 19,
+      "name": "Virginia",
+      "conference": "ACC",
+      "logo": "https://images.collegepolltracker.com/logos/png/uv_100_100.png",
+      "record": "10-3",
       "champ": false
     },
     {
@@ -185,18 +185,18 @@
     },
     {
       "id": 24,
-      "name": "North Texas",
-      "conference": "AAC",
-      "logo": "https://images.collegepolltracker.com/logos/png/unt_100_100.png",
-      "record": "11-1",
-      "champ": false
-    },
-    {
-      "id": 25,
       "name": "James Madison",
       "conference": "Sun Belt",
       "logo": "https://images.collegepolltracker.com/logos/png/jmu_100_100.png",
       "record": "11-1",
       "champ": true
+    },
+    {
+      "id": 25,
+      "name": "North Texas",
+      "conference": "AAC",
+      "logo": "https://images.collegepolltracker.com/logos/png/unt_100_100.png",
+      "record": "11-1",
+      "champ": false
     }
   ]
